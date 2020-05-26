@@ -1,9 +1,13 @@
 package com.example.itachiinventory.controller;
 
+import com.example.itachiinventory.service.InventoryService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,11 +15,16 @@ import java.util.Map;
 @Slf4j
 public class InventoryController {
 
-    @PostMapping("deductTheInventory")
-    public Map deductTheInventory(){
+    @Resource
+    private InventoryService inventoryService;
+
+    @GetMapping("deductTheInventory/{userId}")
+    public Map deductTheInventory(@PathVariable String userId){
+        log.info("进入inventory:{}",userId);
         log.info("进入到InventoryController");
-        Map map = new HashMap();
-        map.put("key","进行-1操作");
-        return map;
+        return inventoryService.deductTheInventory(userId);
     }
+
+
+
 }
